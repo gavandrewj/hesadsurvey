@@ -5,9 +5,24 @@ Authors@R: person('Gavin', 'Gordon', email = 'gavinandrewgordonj@gmail.com', rol
 Description: Data cleaning and creation of app for viz
 License: CC BY 4.0
 Imports: 
+    attempt,
     config (>= 0.3.1),
+    dplyr,
+    DT,
+    glue,
     golem (>= 0.3.1.9000),
-    shiny (>= 1.6.0)
+    htmltools,
+    magrittr,
+    processx,
+    shiny (>= 1.6.0),
+    thinkr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US
+URL: https://github.com/gavandrewj/hesadsurvey
+BugReports: https://github.com/gavandrewj/hesadsurvey/issues
