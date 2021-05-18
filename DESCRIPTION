@@ -1,0 +1,13 @@
+Package: hesadsurvey
+Title: HESAD Survey
+Version: 0.0.0.9000
+Authors@R: person('Gavin', 'Gordon', email = 'gavinandrewgordonj@gmail.com', role = c('cre', 'aut'))
+Description: Data cleaning and creation of app for viz
+License: CC BY 4.0
+Imports: 
+    config (>= 0.3.1),
+    golem (>= 0.3.1.9000),
+    shiny (>= 1.6.0)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
