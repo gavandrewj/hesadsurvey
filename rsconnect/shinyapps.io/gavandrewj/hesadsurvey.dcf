@@ -1,0 +1,13 @@
+name: hesadsurvey
+title: hesadsurvey
+username:
+account: gavandrewj
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4149301
+bundleId: 4612529
+url: https://gavandrewj.shinyapps.io/hesadsurvey/
+when: 1621361248.82609
+lastSyncTime: 1621361248.82609
+asMultiple: FALSE
+asStatic: FALSE

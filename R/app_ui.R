@@ -9,9 +9,35 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic 
-    fluidPage(
-      h1("hesadsurvey")
-    )
+    semantic.dashboard::dashboardPage(
+      title = 'This is my Page title',
+      
+      
+      header = semantic.dashboard::dashboardHeader(),
+      
+      
+      sidebar = semantic.dashboard::dashboardSidebar(size = "wide",
+                                                     semantic.dashboard::sidebarMenu(
+                                                       semantic.dashboard::menuItem(text = "Data", tabName = "datafile", icon = icon("table")),
+                                                       semantic.dashboard::menuItem(text = 'Variable Comparison',tabName = 'varcom',icon = icon('table'))
+                                                       
+                                                     )
+      ),                                                             
+      
+      
+      
+      body = semantic.dashboard::dashboardBody(title = "Basic Dashboard",
+                                               semantic.dashboard::tab_items(
+                                                 
+                                                 semantic.dashboard::tab_item(tabName = 'datafile',
+                                                                              mod_data_ui("data_ui_1")
+                                                 ),
+                                                 
+                                                 semantic.dashboard::tab_item(tabName = 'varcom',
+                                                                              mod_variablecompare_ui("variablecompare_ui_1")
+                                                 )
+                                               )
+      ))
   )
 }
 

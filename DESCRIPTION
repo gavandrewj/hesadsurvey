@@ -5,6 +5,7 @@ Authors@R: person('Gavin', 'Gordon', email = 'gavinandrewgordonj@gmail.com', rol
 Description: Data cleaning and creation of app for viz
 License: CC BY 4.0
 Imports: 
+    arsenal,
     attempt,
     config (>= 0.3.1),
     dplyr,
@@ -13,8 +14,13 @@ Imports:
     golem (>= 0.3.1.9000),
     htmltools,
     magrittr,
+    pkgload,
+    plotly,
     processx,
+    rmarkdown,
+    semantic.dashboard,
     shiny (>= 1.6.0),
+    shiny.semantic,
     thinkr
 Encoding: UTF-8
 LazyData: true
@@ -26,3 +32,5 @@ Config/testthat/edition: 3
 Language: en-US
 URL: https://github.com/gavandrewj/hesadsurvey
 BugReports: https://github.com/gavandrewj/hesadsurvey/issues
+Depends: 
+    R (>= 2.10)
