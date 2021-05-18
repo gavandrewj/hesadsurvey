@@ -7,14 +7,15 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-#' @importFrom shiny.semantic flow_layout
+#' @importFrom shiny.semantic flow_layout segment
 #' @importFrom semantic.dashboard box
 #' @importFrom plotly renderPlotly plotlyOutput plot_ly layout
 mod_variablecompare_ui <- function(id){
   ns <- NS(id)
   tagList(
-  semantic.dashboard::box(    
- shiny.semantic::dropdown_input(ns('selectdataset'),
+  semantic.dashboard::column(width = 16,
+    segment(
+  shiny.semantic::dropdown_input(ns('selectdataset'),
                                    c('SurveyDataset',
                                      'HouseholdMembers',
                                      'HouseholdDemographics',
@@ -22,45 +23,57 @@ mod_variablecompare_ui <- function(id){
                                    value = 'SurveyDataset'),     
 
  uiOutput(ns("pickdatasetnames"))
- ),     
- 
+        )
+ ),
 
- semantic.dashboard::box(tableOutput(ns('rawdatasummary')),
+  semantic.dashboard::column(width = 8,
+ 
+            semantic.dashboard::box(tableOutput(ns('rawdatasummary')),
                          title = 'Raw Data Variable',
                          color = 'blue',
                          ribbon = TRUE,
-                         width = 8),
+                         width = 8)),
  
- semantic.dashboard::box(tableOutput(ns('cleandatasummary')),
+ semantic.dashboard::column(width = 8,
+            semantic.dashboard::box(tableOutput(ns('cleandatasummary')),
                          title = 'Clean Data Variable',
                          color = 'red',
                          ribbon = TRUE,
-                         width = 8),
+                         width = 8)),
  
- semantic.dashboard::box(plotlyOutput(ns('rawdatachart')),
+  
+  
+# 
+#  segment(
+# 
+# 
+  semantic.dashboard::column(width = 8,
+            semantic.dashboard::box(plotlyOutput(ns('rawdatachart')),
                          title = 'Raw Var Chart',
                          color = 'blue',
                          ribbon = TRUE,
-                         width = 8),
- 
- semantic.dashboard::box(plotlyOutput(ns('cleandatachart')),
+                         width = 8)),
+
+  semantic.dashboard::column(width = 8,
+            semantic.dashboard::box(plotlyOutput(ns('cleandatachart')),
                          title = 'Clean Var Chart',
                          color = 'red',
                          ribbon = TRUE,
-                         width = 8),
- 
+                         width = 8)),
+
+
  semantic.dashboard::box(htmlOutput(ns('changes')),
                          title = 'Changes made to variable',
                          color = 'yellow',
                          ribbon = TRUE,
                          width = 16)
- 
- 
+
+
     
+  
+  
  
- 
- 
-  )
+  ) 
 }
     
 #' variablecompare Server Functions
@@ -72,7 +85,7 @@ mod_variablecompare_server <- function(id){
  
     datachoice <- reactive({
       if(input[['selectdataset']] == 'SurveyDataset'){
-        c('surveydataset','rawsurveydataset')
+        c('surveydataset','rawsurveydata')
       }
     })
     
@@ -105,7 +118,7 @@ mod_variablecompare_server <- function(id){
     
     output$rawdatasummary <- renderTable({
       table_one <- arsenal::tableby( arsenal::formulize(x = input[['selectvar']]),
-                                     data = rawdata,
+                                     data = get(datachoice()[2]),
                                      control = arsenal::tableby.control(
                                        test = FALSE)
       )
@@ -128,7 +141,7 @@ mod_variablecompare_server <- function(id){
     
     
     output$rawdatachart <- renderPlotly({
-      plot_ly(rawdata,x = ~get(input[['selectvar']])) %>% 
+      plot_ly(get(datachoice()[2]),x = ~get(input[['selectvar']])) %>% 
         layout(xaxis = list(
           title = input[['selectvar']]
         )
