@@ -10,6 +10,7 @@
 #' @importFrom shiny.semantic flow_layout segment
 #' @importFrom semantic.dashboard box
 #' @importFrom plotly renderPlotly plotlyOutput plot_ly layout
+#' @importFrom shinycssloaders withSpinner
 mod_variablecompare_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -92,6 +93,8 @@ mod_variablecompare_server <- function(id){
     
     output$pickdatasetnames <- renderUI({
       #req(input[['selectdataset']])
+      value <- isolate(input[['selectvar']])
+      
       tagList(
       shiny.semantic::dropdown_input(ns('selectvar'),
                                      names(get(datachoice()[1])),
@@ -111,7 +114,7 @@ mod_variablecompare_server <- function(id){
       )
       
       
-      as.data.frame(summary(table_one,text = TRUE), text = "html") 
+      as.data.frame(summary(table_one,text = TRUE), text = "html")  
     }, sanitize.text.function = function(x) x)
     
     

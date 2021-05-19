@@ -16,7 +16,7 @@
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
 usethis::use_package( "semantic.dashboard" )
-usethis::use_package( "rmarkdown" )
+usethis::use_package( "shinycssloaders" )
 
 
 ## Add modules ----
