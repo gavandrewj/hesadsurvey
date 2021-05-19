@@ -13,5 +13,6 @@ changesinfo[changesinfo$varname == 'p1',]$changes <- 'Check name S and ttt'
 changesinfo[changesinfo$varname == 'p2',]$changes <- 'Check name A'
 changesinfo[changesinfo$varname == 'p3',]$changes <- 'Check name C, child1'
 changesinfo[changesinfo$varname == 'q15',]$changes <- 'There is a zero entry when this shouldnt be possible given that this a closed question that is required and 0 is not part of the "same" choice values. It is currently treated as missing with no label'
+changesinfo[changesinfo$varname == 'q19',]$changes <- 'Other option has heavy out of season rainfall. Examples in survey given included unusual temperature thus this would qualify. Remaining other option has ccc'
 
 usethis::use_data(changesinfo, overwrite = TRUE)

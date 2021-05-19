@@ -400,6 +400,90 @@ attr(surveydataset$q18, "var.labels") <- 'Has the household experienced any extr
 attr(surveydataset$q18,'label') <- 'Has the household experienced any extreme climate events the last 12 months?'
 
 
+#q19
+surveydataset[surveydataset$q18 != 'Yes','q19'] <- '97'
+surveydataset[surveydataset$q19oth == 'Heavy rains from May-September','q19'] <- '5'
+
+surveydataset$q19 <- factor(surveydataset$q19,
+                            levels = c(1,2,3,4,5,97),
+                            labels = c(
+                              'Flood',
+                              'Longer than normal dry period',
+                              'Period with very hot days',
+                              'Other',
+                              'Heavy rains (Out of Season)',
+                              'Not Applicable'
+                            ))
+
+surveydataset$q19 <- factor(surveydataset$q19)
+attr(surveydataset$q19, "var.labels") <- 'What was the event about?'
+attr(surveydataset$q19,'label') <- 'What was the event about?'
+
+# q19oth removed 
+surveydataset <- surveydataset[,-41]
+
+
+
+#q20
+surveydataset[surveydataset$q18 != 'Yes','q20'] <- '97'
+
+surveydataset$q20  <- factor(surveydataset$q20,
+                             levels = c(1,2,3,4,5,98,99,97),
+                             labels = c(
+                               'No significant loss',
+                               'No more than one-third',
+                               'More than one-third but less than one half',
+                               'More than half but less than three-quarters',
+                               'All or almost all',
+                               "Don't know",
+                               'No answer',
+                               'Not Applicable'   
+                             )
+)
+
+surveydataset$q20 <- factor(surveydataset$q20)
+
+
+attr(surveydataset$q20, "var.labels") <- 'How severe was the loss of production of food and income due to this event? How much of the production and or income was lost?'
+attr(surveydataset$q20,'label') <- 'How severe was the loss of production of food and income due to this event? How much of the production and or income was lost?'
+
+
+
+#q21
+surveydataset$q21 <- factor(surveydataset$q21,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
+
+                            ))
+
+surveydataset$q21 <- factor(surveydataset$q21)
+
+attr(surveydataset$q21, "var.labels") <- 'Did the household experience water scarcity **for household needs** the last 12 months?'
+attr(surveydataset$q21,'label') <- 'Did the household experience water scarcity **for household needs** the last 12 months?'
+
+
+
+#q22
+surveydataset$q22 <- factor(surveydataset$q22,
+                            levels = c(0,1,97,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              'Not applicable',
+                              "Don't know",
+                              'No answer'
+                            ))
+
+surveydataset$q22 <- factor(surveydataset$q22)
+
+attr(surveydataset$q22, "var.labels") <- 'Has the household experienced water scarcity **for production needs** the last 12 months?'
+attr(surveydataset$q22,'label') <- 'Has the household experienced water scarcity **for production needs** the last 12 months?'
+
+
 
 varlabel <- c(
   'start',
@@ -442,7 +526,11 @@ varlabel <- c(
   'Has the household used climate-smart production practices or techniques, in at least 1/4 of its cultivated land **within the last 12 months?**',
   'When were these practices first adopted by the household?',
   'Has the household experienced any extreme climate events the last 12 months?',
-  rep('eh',314)
+  'What was the event about?',
+  'How severe was the loss of production of food and income due to this event? How much of the production and or income was lost?',
+  'Did the household experience water scarcity **for household needs** the last 12 months?',
+  'Has the household experienced water scarcity **for production needs** the last 12 months?',
+  rep('eh',309)
 )
 
 attr(surveydataset, "var.labels") <- varlabel

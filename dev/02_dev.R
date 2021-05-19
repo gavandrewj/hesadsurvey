@@ -37,7 +37,7 @@ golem::add_css_file( "custom" )
 
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw( name = "changesinfo", open = FALSE ) 
+usethis::use_data_raw( name = "issues", open = FALSE ) 
 
 ## Tests ----
 ## Add one line by test you want to create
