@@ -12,5 +12,6 @@ changesinfo[changesinfo$varname == 'q1_0',]$changes <- 'Changed to numeric. Larg
 changesinfo[changesinfo$varname == 'p1',]$changes <- 'Check name S and ttt'
 changesinfo[changesinfo$varname == 'p2',]$changes <- 'Check name A'
 changesinfo[changesinfo$varname == 'p3',]$changes <- 'Check name C, child1'
+changesinfo[changesinfo$varname == 'q15',]$changes <- 'There is a zero entry when this shouldnt be possible given that this a closed question that is required and 0 is not part of the "same" choice values. It is currently treated as missing with no label'
 
 usethis::use_data(changesinfo, overwrite = TRUE)

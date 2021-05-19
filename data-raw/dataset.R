@@ -266,10 +266,10 @@ attr(surveydataset$q11, "var.labels") <- 'Have one or more household members par
 attr(surveydataset$q11,'label') <- 'Have one or more household members participated in the development or updating of a community development plan, village investment plan or similar types of plans **in the last 12 months?**'
 
 ## q12
- surveydataset[surveydataset$q11 != 'Yes','q12'] <- '-3'
+ surveydataset[surveydataset$q11 != 'Yes','q12'] <- '97'
 
 surveydataset$q12 <- factor(surveydataset$q12,
-                            levels = c(0,1,98,99,-3),
+                            levels = c(0,1,98,99,97),
                             labels = c(
                               'No',
                               'Yes',
@@ -304,10 +304,10 @@ attr(surveydataset$q13,'label') <- 'Is at least one household member participati
 
 
 #q14
-surveydataset[surveydataset$q13 != 'Yes','q14'] <- '-3'
+surveydataset[surveydataset$q13 != 'Yes','q14'] <- '97'
 
 surveydataset$q14 <- factor(surveydataset$q14,
-                            levels = c(0,1,98,99,-3),
+                            levels = c(0,1,98,99,97),
                             labels = c(
                               'No',
                               'Yes',
@@ -323,6 +323,81 @@ attr(surveydataset$q14, "var.labels") <- 'Has the business plan contributed to a
 attr(surveydataset$q14,'label') <- 'Has the business plan contributed to an increase in the household incomes in the last twelve months?'
 
 
+# q15
+surveydataset$q15 <- factor(surveydataset$q15,
+                            levels = c(1,2,3,97,98,99),
+                            labels = c(
+                              'Decreased number',
+                              'Same number',
+                              'Increased number',
+                              'Not applicable',
+                              "Don't know",
+                              'No answer'
+
+                            )
+)
+
+surveydataset$q15 <- surveydataset$q15
+
+attr(surveydataset$q15, "var.labels") <- 'Does the household use the same or an increased number of crop varieties, animal species and wild species as food or income generating source compared to 12 months ago?'
+attr(surveydataset$q15,'label') <- 'Does the household use the same or an increased number of crop varieties, animal species and wild species as food or income generating source compared to 12 months ago?'
+
+
+#q16
+
+surveydataset$q16 <- factor(surveydataset$q16,
+                            levels = c(0,1,97,9,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              'Not applicable',
+                              "Don't know",
+                              'No answer'
+
+                            ))
+surveydataset$q16 <- factor(surveydataset$q16)
+
+attr(surveydataset$q16, "var.labels") <- 'Has the household used climate-smart production practices or techniques, in at least 1/4 of its cultivated land **within the last 12 months?**'
+attr(surveydataset$q16,'label') <- 'Has the household used climate-smart production practices or techniques, in at least 1/4 of its cultivated land **within the last 12 months?**'
+
+
+
+#q17
+surveydataset[surveydataset$q16 != 'Yes','q17'] <- '97'
+
+surveydataset$q17 <- factor(surveydataset$q17,
+                             levels = c(1,2,3,98,97),
+                            labels = c(
+                              'Within the last 12 months',
+                              '1-5 years ago',
+                              'More than 5 years ago',
+                              'Don’t know',
+                              'Not Applicable'
+                            ))
+surveydataset$q17 <- factor(surveydataset$q17)
+
+
+attr(surveydataset$q17, "var.labels") <- 'When were these practices first adopted by the household?'
+attr(surveydataset$q17,'label') <- 'When were these practices first adopted by the household?'
+
+
+
+#q18
+surveydataset$q18 <- factor(surveydataset$q18,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
+
+                            )
+                              
+                            )
+surveydataset$q18 <- factor(surveydataset$q18)
+
+attr(surveydataset$q18, "var.labels") <- 'Has the household experienced any extreme climate events the last 12 months?'
+attr(surveydataset$q18,'label') <- 'Has the household experienced any extreme climate events the last 12 months?'
 
 
 
@@ -363,7 +438,11 @@ varlabel <- c(
   'Were actions to reduce the impacts from climate events (such as floods, salt water intrusion or periods with unusual high temperatures) considered in this plan, in which you participated?',
   'Is at least one household member participating in a community or producer group that has an adopted business plan?', 
   'Has the business plan contributed to an increase in the household incomes in the last twelve months?',
-  rep('eh',318)
+  'Does the household use the same or an increased number of crop varieties, animal species and wild species as food or income generating source compared to 12 months ago?',
+  'Has the household used climate-smart production practices or techniques, in at least 1/4 of its cultivated land **within the last 12 months?**',
+  'When were these practices first adopted by the household?',
+  'Has the household experienced any extreme climate events the last 12 months?',
+  rep('eh',314)
 )
 
 attr(surveydataset, "var.labels") <- varlabel
