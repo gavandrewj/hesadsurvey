@@ -1,9 +1,24 @@
 ## code to prepare `dataset` dataset goes here
 library(readxl)
 library(tidyverse)
+library(stringr)
 
 rawsurveydata <- read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_survey_-_all_versions_-_False_-_2021-05-18-13-12-26.xlsx')
 rawsurveydata <- filter(rawsurveydata,q0_5 == 1)
+
+
+rawsurveydata <- mutate(rawsurveydata,
+                        q31_1 = `q31/1`,
+                        q31_2 = `q31/2`,
+                        q31_3 = `q31/3`,
+                        q31_4 = `q31/4`,
+                        q31_5 = `q31/5`,
+                        q31_6 = `q31/6`,
+                        q31_7 = `q31/7`,
+                        q31_8 = `q31/8`,
+                        q31_9 = `q31/9`,
+                        q31_10 = `q31/10`
+)
 usethis::use_data(rawsurveydata, overwrite = TRUE)
 
 #do not touch the above code
@@ -402,7 +417,7 @@ attr(surveydataset$q18,'label') <- 'Has the household experienced any extreme cl
 
 #q19
 surveydataset[surveydataset$q18 != 'Yes','q19'] <- '97'
-surveydataset[surveydataset$q19oth == 'Heavy rains from May-September','q19'] <- '5'
+surveydataset[surveydataset$q19oth == 'Heavy rains from May-September' & is.na(surveydataset$q19oth)== F,'q19'] <- '5'
 
 surveydataset$q19 <- factor(surveydataset$q19,
                             levels = c(1,2,3,4,5,97),
@@ -484,56 +499,680 @@ attr(surveydataset$q22, "var.labels") <- 'Has the household experienced water sc
 attr(surveydataset$q22,'label') <- 'Has the household experienced water scarcity **for production needs** the last 12 months?'
 
 
+#q23
+surveydataset$q23 <- factor(surveydataset$q23,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
 
-varlabel <- c(
-  'start',
-  'end',
-  'today',
-  'District',
-  'Community',
-  'Mode',
-  'Telephone Numbers',
-  'Household ID',
-  'Interview Mode',
-  'Outcome of interview attempt',
-  'How many members does your household have?',
-  'Name of Person One',
-  'Name of Person Two',
-  'Name of Person Three',
-  'Name of Person Four',
-  'Name of Person Five',
-  'Name of Person Six',
-  'Name of Person Seven',
-  'Name of Person Eight',
-  'Name of Person Nine',
-  'Name of Person Ten',
-  'Name of Person Eleven',
-  'Name of Person Twelve',
-  'Name of Person Thirteen',
-  'Name of Person Fourteen',
-  'Name of Person Fifteen',
-  'Name of Person Sixteen',
-  'Name of Person Seventeen',
-  'Name of Person Eighteen',
-  'Name of Person Nineteen',
-  'Which of the following best describes your household?',
-  'Which of the following best describes how your household is managed?',
-  'Have one or more household members participated in the development or updating of a community development plan, village investment plan or similar types of plans **in the last 12 months?**',
-  'Were actions to reduce the impacts from climate events (such as floods, salt water intrusion or periods with unusual high temperatures) considered in this plan, in which you participated?',
-  'Is at least one household member participating in a community or producer group that has an adopted business plan?', 
-  'Has the business plan contributed to an increase in the household incomes in the last twelve months?',
-  'Does the household use the same or an increased number of crop varieties, animal species and wild species as food or income generating source compared to 12 months ago?',
-  'Has the household used climate-smart production practices or techniques, in at least 1/4 of its cultivated land **within the last 12 months?**',
-  'When were these practices first adopted by the household?',
-  'Has the household experienced any extreme climate events the last 12 months?',
-  'What was the event about?',
-  'How severe was the loss of production of food and income due to this event? How much of the production and or income was lost?',
-  'Did the household experience water scarcity **for household needs** the last 12 months?',
-  'Has the household experienced water scarcity **for production needs** the last 12 months?',
-  rep('eh',309)
+                            ))
+surveydataset$q23 <- factor(surveydataset$q23)
+
+attr(surveydataset$q23, "var.labels") <- 'Does the household have access to a renewable energy source for household needs?'
+attr(surveydataset$q23,'label') <- 'Does the household have access to a renewable energy source for household needs?'
+
+
+
+#q24
+surveydataset$q24 <- factor(surveydataset$q24,
+                            levels = c(0,1,97,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              'Not applicable',
+                              "Don't know",
+                              'No answer'
+
+                            ))
+
+surveydataset$q24 <- factor(surveydataset$q24)
+
+attr(surveydataset$q24, "var.labels") <- 'Does the household or the producer group it works with have access to a renewable energy source for production, storage and processing needs?'
+attr(surveydataset$q24,'label') <- 'Does the household or the producer group it works with have access to a renewable energy source for production, storage and processing needs?'
+
+
+#q25
+surveydataset$q25 <- factor(surveydataset$q25,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
+
+                            ))
+surveydataset$q25 <- factor(surveydataset$q25)
+
+attr(surveydataset$q25, "var.labels") <- 'In the last 12 months, has the household used the internet to access information on markets (prices, buyers, demand for products etc.), weather forecast and early warnings or advice on climate smart farming practices?'
+attr(surveydataset$q25,'label') <- 'In the last 12 months, has the household used the internet to access information on markets (prices, buyers, demand for products etc.), weather forecast and early warnings or advice on climate smart farming practices?'
+
+
+
+#q26
+surveydataset[surveydataset$q25 != 'Yes','q26'] <- '97'
+
+
+surveydataset$q26 <- factor(surveydataset$q26,
+                            levels = c(0,1,97,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              'Not applicable',
+                              "Don't know",
+                              'No answer'
+                            ))
+
+surveydataset$q26 <- factor(surveydataset$q26)
+
+attr(surveydataset$q26, "var.labels") <- 'Did you use this information to make decisions on crops and varieties to cultivate and time of planting or other important decisions in your farming activities?'
+attr(surveydataset$q26,'label') <- 'Did you use this information to make decisions on crops and varieties to cultivate and time of planting or other important decisions in your farming activities?'
+
+
+#q27
+
+surveydataset$q27 <- factor(surveydataset$q27,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
+                              
+                            ))
+surveydataset$q27 <- factor(surveydataset$q27)
+
+attr(surveydataset$q27, "var.labels") <- 'If a climate disaster, such as a flood or a long dry and hot period, happened within the next 6 months, does your household have or have access to resources (for example: cash savings, seeds, stored food, etc.) to cope?'
+attr(surveydataset$q27,'label') <- 'If a climate disaster, such as a flood or a long dry and hot period, happened within the next 6 months, does your household have or have access to resources (for example: cash savings, seeds, stored food, etc.) to cope?'
+
+
+#q28
+
+surveydataset$q28 <- factor(surveydataset$q28,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
+                              
+                            ))
+surveydataset$q28 <- factor(surveydataset$q28)
+
+attr(surveydataset$q28, "var.labels") <- 'Have your household or community experienced that agricultural land is affected by salinity (sea/salt water intrusion)'
+attr(surveydataset$q28,'label') <- 'Have your household or community experienced that agricultural land is affected by salinity (sea/salt water intrusion)'
+
+
+
+#q29
+surveydataset[surveydataset$q28 != 'Yes','q29'] <- '97'
+
+surveydataset$q29 <- factor(surveydataset$q29,
+                            levels = c(0,1,98,99,97),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer',
+                              'Not Applicable'
+                            ))
+surveydataset$q29 <- factor(surveydataset$q29)
+
+attr(surveydataset$q29, "var.labels") <- 'Have you been able to change to more salt tolerant crops or aquaculture to still be able to use this land?'
+attr(surveydataset$q29,'label') <- 'Have you been able to change to more salt tolerant crops or aquaculture to still be able to use this land?'
+
+#q300 removed
+#q301
+
+surveydataset <- dplyr::select(surveydataset,!q30_0) 
+
+surveydataset$q30_1 <- factor(surveydataset$q30_1,
+                              levels = c(0,1),
+                              labels = c(
+                                'No',
+                                'Yes'
+                              ))
+
+surveydataset$q30_1 <- factor(surveydataset$q30_1)
+
+attr(surveydataset$q30_1, "var.labels") <- 'Forest, or tree species, that is kept to protect the water source: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_1,'label') <- 'Forest, or tree species, that is kept to protect the water source: Are there any mechanisms in place to protect the water source?'
+
+
+
+#q302
+
+surveydataset$q30_2 <- factor(surveydataset$q30_2,
+                              levels = c(0,1),
+                              labels = c(
+                                'No',
+                                'Yes'
+                              ))
+
+surveydataset$q30_2 <- factor(surveydataset$q30_2)
+
+attr(surveydataset$q30_2, "var.labels") <- 'Grazing that is kept unused and being restored or reforested: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_2,'label') <- 'Grazing that is kept unused and being restored or reforested: Are there any mechanisms in place to protect the water source?'
+
+
+#q303
+
+surveydataset$q30_3 <- factor(surveydataset$q30_3,
+                              levels = c(0,1),
+                              labels = c(
+                                'No',
+                                'Yes'
+                              ))
+
+surveydataset$q30_3 <- factor(surveydataset$q30_3)
+
+attr(surveydataset$q30_3, "var.labels") <- 'Fence: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_3,'label') <- 'Fence: Are there any mechanisms in place to protect the water source?'
+
+#leaving q304 and q30oth for now 
+
+#changing the names to adjust for the /
+surveydataset <- mutate(surveydataset,
+                       q31_1 = `q31/1`,
+                       q31_2 = `q31/2`,
+                       q31_3 = `q31/3`,
+                       q31_4 = `q31/4`,
+                       q31_5 = `q31/5`,
+                       q31_6 = `q31/6`,
+                       q31_7 = `q31/7`,
+                       q31_8 = `q31/8`,
+                       q31_9 = `q31/9`,
+                       q31_10 = `q31/10`
+                       )
+
+
+
+surveydataset <- dplyr::select(surveydataset,
+                        !c(`q31/1`,
+                          `q31/2`,
+                          `q31/3`,
+                          `q31/4`,
+                          `q31/5`,
+                          `q31/6`,
+                          `q31/7`,
+                          `q31/8`,
+                          `q31/9`,
+                          `q31/10`)
 )
 
-attr(surveydataset, "var.labels") <- varlabel
+#q31/1
+surveydataset$q31_1 <- factor(surveydataset$q31_1,
+                                levels = c(0,1),
+                                labels = c('No',
+                                           'Yes'))
+
+surveydataset$q31_1 <- factor(surveydataset$q31_1)
+
+attr(surveydataset$q31_1, "var.labels") <- 'What are the water sources for household uses? Small stream'
+attr(surveydataset$q31_1,'label') <- 'What are the water sources for household uses? Small stream'
+
+
+
+#q31/2
+surveydataset$q31_2 <- factor(surveydataset$q31_2,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_2 <- factor(surveydataset$q31_2)
+
+attr(surveydataset$q31_2, "var.labels") <- 'What are the water sources for household uses? Private well'
+attr(surveydataset$q31_2,'label') <- 'What are the water sources for household uses? Private well'
+
+
+#q31/3
+surveydataset$q31_3 <- factor(surveydataset$q31_3,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_3 <- factor(surveydataset$q31_3)
+
+attr(surveydataset$q31_3, "var.labels") <- 'What are the water sources for household uses? Public well (not piped)'
+attr(surveydataset$q31_3,'label') <- 'What are the water sources for household uses? Public well (not piped)'
+
+
+#q31/4
+surveydataset$q31_4 <- factor(surveydataset$q31_4,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_4 <- factor(surveydataset$q31_4)
+
+attr(surveydataset$q31_4, "var.labels") <- 'What are the water sources for household uses? Public piped water system'
+attr(surveydataset$q31_4,'label') <- 'What are the water sources for household uses? Public piped water system'
+
+
+#q31/5
+surveydataset$q31_5 <- factor(surveydataset$q31_5,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_5 <- factor(surveydataset$q31_5)
+
+attr(surveydataset$q31_5, "var.labels") <- 'What are the water sources for household uses? Rainwater harvesting System'
+attr(surveydataset$q31_5,'label') <- 'What are the water sources for household uses? Rainwater harvesting System'
+
+
+#q31/6
+surveydataset$q31_6 <- factor(surveydataset$q31_6,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_6 <- factor(surveydataset$q31_6)
+
+attr(surveydataset$q31_6, "var.labels") <- 'What are the water sources for household uses? River'
+attr(surveydataset$q31_6,'label') <- 'What are the water sources for household uses? River'
+
+
+#q31/7
+surveydataset$q31_7 <- factor(surveydataset$q31_7,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_7 <- factor(surveydataset$q31_7)
+
+attr(surveydataset$q31_7, "var.labels") <- 'What are the water sources for household uses? Creek'
+attr(surveydataset$q31_7,'label') <- 'What are the water sources for household uses? Creek'
+
+
+
+#q31/7
+surveydataset$q31_8 <- factor(surveydataset$q31_8,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_8 <- factor(surveydataset$q31_8)
+
+attr(surveydataset$q31_8, "var.labels") <- 'What are the water sources for household uses? Lake/Pond (not well)'
+attr(surveydataset$q31_8,'label') <- 'What are the water sources for household uses? Lake/Pond (not well)'
+
+
+#q31/7
+surveydataset$q31_9 <- factor(surveydataset$q31_9,
+                              levels = c(0,1),
+                              labels = c('No',
+                                         'Yes'))
+
+surveydataset$q31_9 <- factor(surveydataset$q31_9)
+
+attr(surveydataset$q31_9, "var.labels") <- 'What are the water sources for household uses? Borehole'
+attr(surveydataset$q31_9,'label') <- 'What are the water sources for household uses? Borehole'
+
+
+#remove q31oth and q310
+surveydataset <- dplyr::select(surveydataset,
+                               !c(
+                                  'q31oth',
+                                  'q31_10',
+                                  'q31',
+                                  'noteresil')
+)
+
+
+
+#q32
+surveydataset$q32 <- factor(surveydataset$q32,
+                              levels = c(1:8,98,99),
+                              labels = c(
+                                '0 - 49,999',
+                                '50,000 - 99,999',
+                                '100,000 - 149,999',
+                                '150,000 - 199,999',
+                                '200,000 - 249,999',
+                                '250,000 - 299,999',
+                                '300,000 - 349,999',
+                                '350,000 or more',
+                                "Don’t know",
+                                'Refused'
+                                
+                                         ))
+
+surveydataset$q32 <- factor(surveydataset$q32)
+
+attr(surveydataset$q32, "var.labels") <- 'What is your approximate total household monthly income, in Guyanese dollar?'
+attr(surveydataset$q32,'label') <- 'What is your approximate total household monthly income, in Guyanese dollar?'
+
+
+surveydataset <- dplyr::select(surveydataset,!c('q33'))
+#q331 to q336
+surveydataset$q33_1 <- as.numeric(surveydataset$q33_1) 
+attr(surveydataset$q33_1, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: Agricultural production (own operation)'
+attr(surveydataset$q33_1,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: Agricultural production (own operation)'
+
+
+#q332
+surveydataset$q33_2 <- as.numeric(surveydataset$q33_2) 
+attr(surveydataset$q33_2, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: Off-farm agricultural employment (not own operation)'
+attr(surveydataset$q33_2,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: Off-farm agricultural employment (not own operation)'
+
+
+#q333
+surveydataset$q33_3 <- as.numeric(surveydataset$q33_3) 
+attr(surveydataset$q33_3, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: Non-agricultural employment'
+attr(surveydataset$q33_3,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: Non-agricultural employment'
+
+
+#q334
+surveydataset$q33_4 <- as.numeric(surveydataset$q33_4) 
+attr(surveydataset$q33_4, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: Non-agricultural businesses'
+attr(surveydataset$q33_4,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: Non-agricultural businesses'
+
+
+#q335
+surveydataset$q33_5 <- as.numeric(surveydataset$q33_5) 
+attr(surveydataset$q33_5, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: State subsidies'
+attr(surveydataset$q33_5,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: State subsidies'
+
+
+#q336
+surveydataset$q33_6 <- as.numeric(surveydataset$q33_6) 
+attr(surveydataset$q33_6, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: Remittances'
+attr(surveydataset$q33_6,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: Remittances'
+
+
+#q337
+surveydataset$q33_7 <- as.numeric(surveydataset$q33_7) 
+attr(surveydataset$q33_7, "var.labels") <- '**In the last month**, what percentage of your total household income came from each of the following: Other'
+attr(surveydataset$q33_7,'label') <- '**In the last month**, what percentage of your total household income came from each of the following: Other'
+
+
+
+#q341
+surveydataset$q34_1 <- as.numeric(surveydataset$q34_1) 
+attr(surveydataset$q34_1, "var.labels") <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Food'
+attr(surveydataset$q34_1,'label') <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Food'
+
+
+#q342
+surveydataset$q34_2 <- as.numeric(surveydataset$q34_2) 
+attr(surveydataset$q34_2, "var.labels") <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Health'
+attr(surveydataset$q34_2,'label') <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Health'
+
+#q343
+surveydataset$q34_3 <- as.numeric(surveydataset$q34_3) 
+attr(surveydataset$q34_3, "var.labels") <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Education'
+attr(surveydataset$q34_3,'label') <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Education'
+
+#q344
+surveydataset$q34_4 <- as.numeric(surveydataset$q34_4) 
+attr(surveydataset$q34_4, "var.labels") <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Housing'
+attr(surveydataset$q34_4,'label') <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Housing'
+
+
+#q345
+surveydataset$q34_5 <- as.numeric(surveydataset$q34_5) 
+attr(surveydataset$q34_5, "var.labels") <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Transportation'
+attr(surveydataset$q34_5,'label') <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Transportation'
+
+
+#q346
+surveydataset$q34_6 <- as.numeric(surveydataset$q34_6) 
+attr(surveydataset$q34_6, "var.labels") <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Others'
+attr(surveydataset$q34_6,'label') <- '**In the last month**, what percentage of your total household income did you spend on each of the following:Others'
+
+
+#q35
+surveydataset$q35 <- factor(surveydataset$q35,
+                            levels = c(0,1,98,99),
+                            labels = c(
+                              'No',
+                              'Yes',
+                              "Don't know",
+                              'No answer'
+                              
+                            ))
+surveydataset$q35 <- factor(surveydataset$q35)
+
+attr(surveydataset$q35, "var.labels") <- 'In the last **twelve months**, did the household own or have access to any land for agricultural production (crop or livestock) or for harvesting of forest?'
+attr(surveydataset$q35,'label') <- 'In the last **twelve months**, did the household own or have access to any land for agricultural production (crop or livestock) or for harvesting of forest?'
+
+
+
+#q50
+
+surveydataset[surveydataset$q35 != 'Yes','q50'] <- '97'
+
+surveydataset$q50 <- factor(surveydataset$q50,
+                            levels = c(1:6,97,98,99),
+                            labels = c(
+                              'With land title',
+                              'Without land title',
+                              'Rented',
+                              'Leased',
+                              'Community-owned',
+                              'Other', 
+                              'Not applicable',
+                              "Don’t know",
+                              'No answer'
+                              ))
+surveydataset$q50 <- factor(surveydataset$q50)
+
+attr(surveydataset$q50, "var.labels") <- 'What is the ownership status of the **main plot of land** used  for agricultural or forestry production?'
+attr(surveydataset$q50,'label') <- 'What is the ownership status of the **main plot of land** used  for agricultural or forestry production?'
+
+
+#q40
+surveydataset <- mutate(surveydataset,
+                        q40first = as.character(purrr::map(strsplit(surveydataset$q40,' '),1)),
+                        q40second = as.character(purrr::map(strsplit(surveydataset$q40,' '),2)),
+                        .keep = 'unused',
+                        .after = 'q40')
+
+
+surveydataset <- dplyr::select(surveydataset, !c('q40/1','q40/2','q40/3','q40/4', 'q40/5', 'q40/6','q40/7','q40/8',
+'q40/9', 'q40/10','q40/11','q40/12','q40/13','q40/14','q40/15','q40/16',
+'q40/17','q40/18','q40/19','q40/20', 'q40/100','q40'))
+
+surveydataset[surveydataset$q35 != 'Yes',c('q40first','q40second')] <- '97'
+
+for(i in 1:nrow(surveydataset)){
+  if(surveydataset$q40first[i] != '97'){
+  surveydataset$q40first[i] <- surveydataset[i,paste(c('p',surveydataset$q40first[i]),collapse = '')]
+  }
+  
+  if(surveydataset$q40second[i] != '97' & surveydataset$q40second[i] != 'NULL'){
+    surveydataset$q40second[i] <- surveydataset[i,paste(c('p',surveydataset$q40second[i]),collapse = '')]
+  }
+  
+}
+
+surveydataset$q40first <- as.character(surveydataset$q40first)
+surveydataset$q40second <- as.character(surveydataset$q40second)
+surveydataset[surveydataset$q40second == 'NULL','q40second'] <- 'Not selected'
+
+levelsq40first <- names(table(surveydataset$q40first))
+labelsq40first <- c('Not Applicable',levelsq40first[2:32])
+
+surveydataset$q40first <- factor(surveydataset$q40first,
+                                 levels = levelsq40first,
+                                 labels = unique(labelsq40first)[1:18])
+
+levelsq40second <- names(table(surveydataset$q40second))
+labelsq40second <- c('Not Applicable',levelsq40second[2:7])
+surveydataset$q40second <- factor(surveydataset$q40second,
+                                  levels = levelsq40second,
+                                  labels = labelsq40second)
+# surveydataset <- mutate(surveydataset,
+#                         q40_1 = `q40/1`,
+#                         q40_2 = `q40/2`,
+#                         q40_3 = `q40/3`,
+#                         q40_4 = `q40/4`,
+#                         q40_5 = `q40/5`,
+#                         q40_6 = `q40/6`,
+#                         q40_7 = `q40/7`,
+#                         q40_8 = `q40/8`,
+#                         q40_9 = `q40/9`,
+#                         q40_10 = `q40/10`,
+#                         q40_11 = `q40/11`,
+#                         q40_12 = `q40/12`,
+#                         q40_13 = `q40/13`,
+#                         q40_14 = `q40/14`,
+#                         q40_15 = `q40/15`,
+#                         q40_16 = `q40/16`,
+#                         q40_17 = `q40/17`,
+#                         q40_18 = `q40/18`,
+#                         q40_19 = `q40/19`,
+#                         q40_20 = `q40/20`,
+#                         q40_100 = `q40/100`,
+#                         .keep = 'unused',
+#                         .after = 'q40' )
+# 
+# surveydataset[surveydataset$q35 != 'Yes',c('q40_1',
+#                                            'q40_2',
+#                                            'q40_3',
+#                                            'q40_4',
+#                                            'q40_5',
+#                                            'q40_6',
+#                                            'q40_7',
+#                                            'q40_8',
+#                                            'q40_9',
+#                                            'q40_10',
+#                                            'q40_11',
+#                                            'q40_12',
+#                                            'q40_13',
+#                                            'q40_14',
+#                                            'q40_15',
+#                                            'q40_16',
+#                                            'q40_17',
+#                                            'q40_18',
+#                                            'q40_19',
+#                                            'q40_20',
+#                                            'q40_100',
+#                                            'q36_1',
+#                                            'q36_1a',
+#                                            'q36_1aoth',
+#                                            'q36_2',
+#                                            'q36_2a',
+#                                            'q36_2aoth',
+#                                            'q36_3',
+#                                            'q36_3a',
+#                                            'q36_3aoth',
+#                                            'q36_4',
+#                                            'q36_4a',
+#                                            'q36_4aoth',
+#                                            'q36_5',
+#                                            'q36_5a',
+#                                            'q36_5aoth'
+#                                            )] <- '97'
+# 
+# 
+# #finding the vars in q40 that have no reference to a person and drop
+# 
+# for(var in c('q40_1','q40_2','q40_3','q40_4','q40_5','q40_6','q40_7','q40_8','q40_9',
+#              'q40_10','q40_11','q40_12','q40_13','q40_14','q40_15','q40_16','q40_17','q40_18',
+#              'q40_19','q40_20','q40_100')) {
+#   if(paste(names(table(surveydataset[,var])),collapse  = '') == '097'){
+#     surveydataset <- dplyr::select(surveydataset,!c(var))
+#   }
+# }
+
+#q361
+surveydataset$q36_1 <- as.numeric(surveydataset$q36_1)
+
+attr(surveydataset$q36_1, "var.labels") <- 'Area'
+attr(surveydataset$q36_1,'label') <- 'Area'
+
+
+
+#q362
+surveydataset$q36_1a <- factor(surveydataset$q36_1a,
+                            levels = c(1:6),
+                            labels = c(
+                              'Square rod',
+                              'Acre',
+                              'Hectare',
+                              'Square meter',
+                              'Square feet',
+                              'Other'
+                              
+                            ))
+surveydataset$q36_1a <- factor(surveydataset$q36_1a)
+
+attr(surveydataset$q36_1a, "var.labels") <- 'Unit for Area'
+attr(surveydataset$q36_1a,'label') <- 'Unit for Area'
+
+
+
+
+# varlabel <- c(
+#   'start',
+#   'end',
+#   'today',
+#   'District',
+#   'Community',
+#   'Mode',
+#   'Telephone Numbers',
+#   'Household ID',
+#   'Interview Mode',
+#   'Outcome of interview attempt',
+#   'How many members does your household have?',
+#   'Name of Person One',
+#   'Name of Person Two',
+#   'Name of Person Three',
+#   'Name of Person Four',
+#   'Name of Person Five',
+#   'Name of Person Six',
+#   'Name of Person Seven',
+#   'Name of Person Eight',
+#   'Name of Person Nine',
+#   'Name of Person Ten',
+#   'Name of Person Eleven',
+#   'Name of Person Twelve',
+#   'Name of Person Thirteen',
+#   'Name of Person Fourteen',
+#   'Name of Person Fifteen',
+#   'Name of Person Sixteen',
+#   'Name of Person Seventeen',
+#   'Name of Person Eighteen',
+#   'Name of Person Nineteen',
+#   'Which of the following best describes your household?',
+#   'Which of the following best describes how your household is managed?',
+#   'Have one or more household members participated in the development or updating of a community development plan, village investment plan or similar types of plans **in the last 12 months?**',
+#   'Were actions to reduce the impacts from climate events (such as floods, salt water intrusion or periods with unusual high temperatures) considered in this plan, in which you participated?',
+#   'Is at least one household member participating in a community or producer group that has an adopted business plan?', 
+#   'Has the business plan contributed to an increase in the household incomes in the last twelve months?',
+#   'Does the household use the same or an increased number of crop varieties, animal species and wild species as food or income generating source compared to 12 months ago?',
+#   'Has the household used climate-smart production practices or techniques, in at least 1/4 of its cultivated land **within the last 12 months?**',
+#   'When were these practices first adopted by the household?',
+#   'Has the household experienced any extreme climate events the last 12 months?',
+#   'What was the event about?',
+#   'How severe was the loss of production of food and income due to this event? How much of the production and or income was lost?',
+#   'Did the household experience water scarcity **for household needs** the last 12 months?',
+#   'Has the household experienced water scarcity **for production needs** the last 12 months?',
+#   'Does the household have access to a renewable energy source for household needs?',
+#   'Does the household or the producer group it works with have access to a renewable energy source for production, storage and processing needs?',
+#   'In the last 12 months, has the household used the internet to access information on markets (prices, buyers, demand for products etc.), weather forecast and early warnings or advice on climate smart farming practices?',
+#   'Did you use this information to make decisions on crops and varieties to cultivate and time of planting or other important decisions in your farming activities?',
+#   'If a climate disaster, such as a flood or a long dry and hot period, happened within the next 6 months, does your household have or have access to resources (for example: cash savings, seeds, stored food, etc.) to cope?',
+#   'Have your household or community experienced that agricultural land is affected by salinity (sea/salt water intrusion)',
+#   'Forest, or tree species, that is kept to protect the water source: Are there any mechanisms in place to protect the water source?',
+#   'Grazing that is kept unused and being restored or reforested: Are there any mechanisms in place to protect the water source?',
+#   'Fence: Are there any mechanisms in place to protect the water source?',
+#   'What are the water sources for household uses? Small stream',
+#   'What are the water sources for household uses? Private well',
+#   'What are the water sources for household uses? Public well (not piped)',
+#   'What are the water sources for household uses? Public piped water system',
+#   'What are the water sources for household uses? Rainwater harvesting System',
+#   'What are the water sources for household uses? River',
+#   'What are the water sources for household uses? Creek',
+#   'What are the water sources for household uses? Lake/Pond (not well)',
+#   'What is your approximate total household monthly income, in Guyanese dollar?'
+# )
+# 
+# attr(surveydataset, "var.labels") <- varlabel
 
 
 
