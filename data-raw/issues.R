@@ -6,5 +6,4 @@ issues[issues$varnames == 'q20','issue'] <- 'Has a zero value that shouldnt be p
 issues[issues$varnames == 'q30oth','issue'] <- 'Other options are culvert/koker and dam which do not seem to be in keeping with protecting a water resource'
 
 
-
 usethis::use_data(issues, overwrite = TRUE)

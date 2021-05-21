@@ -15,5 +15,6 @@ changesinfo[changesinfo$varname == 'p3',]$changes <- 'Check name C, child1'
 changesinfo[changesinfo$varname == 'q15',]$changes <- 'There is a zero entry when this shouldnt be possible given that this a closed question that is required and 0 is not part of the "same" choice values. It is currently treated as missing with no label'
 changesinfo[changesinfo$varname == 'q19',]$changes <- 'Other option has heavy out of season rainfall. Examples in survey given included unusual temperature thus this would qualify. Remaining other option has ccc'
 changesinfo[changesinfo$varname == 'q29',]$changes <- 'Applied labels. Conditioned on yes from q28'
+changesinfo[changesinfo$varname == 'q37b',]$changes <- 'Applied labels. Only one person mentioned they have this crop. The others did not indicate nor had the option to do so'
 
 usethis::use_data(changesinfo, overwrite = TRUE)

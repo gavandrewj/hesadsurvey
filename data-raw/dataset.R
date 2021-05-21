@@ -2,8 +2,9 @@
 library(readxl)
 library(tidyverse)
 library(stringr)
+library(datapasta)
 
-rawsurveydata <- read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_survey_-_all_versions_-_False_-_2021-05-18-13-12-26.xlsx')
+rawsurveydata <- read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_Survey2_-_all_versions_-_False_-_2021-05-21-10-31-53.xlsx')
 rawsurveydata <- filter(rawsurveydata,q0_5 == 1)
 
 
@@ -25,7 +26,7 @@ usethis::use_data(rawsurveydata, overwrite = TRUE)
 
 
 
-surveydataset <- read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_survey_-_all_versions_-_False_-_2021-05-18-13-12-26.xlsx')
+surveydataset <- read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_Survey2_-_all_versions_-_False_-_2021-05-21-10-31-53.xlsx')
 
 #filter to remove records with no data
 
@@ -943,7 +944,24 @@ attr(surveydataset$q35,'label') <- 'In the last **twelve months**, did the house
 
 #q50
 
-surveydataset[surveydataset$q35 != 'Yes','q50'] <- '97'
+surveydataset[surveydataset$q35 != 'Yes',c('q50')] <- '97'
+                                           
+surveydataset[surveydataset$q35 != 'Yes',c('q36_1',
+                                           'q36_1a',
+                                           'q36_1aoth',
+                                           'q36_2',
+                                           'q36_2a',
+                                           'q36_2aoth',
+                                           'q36_3',
+                                           'q36_3a',
+                                           'q36_3aoth',
+                                           'q36_4',
+                                           'q36_4a',
+                                           'q36_4aoth',
+                                           'q36_5',
+                                           'q36_5a',
+                                           'q36_5aoth')] <- '-3'
+
 
 surveydataset$q50 <- factor(surveydataset$q50,
                             levels = c(1:6,97,98,99),
@@ -963,6 +981,21 @@ surveydataset$q50 <- factor(surveydataset$q50)
 attr(surveydataset$q50, "var.labels") <- 'What is the ownership status of the **main plot of land** used  for agricultural or forestry production?'
 attr(surveydataset$q50,'label') <- 'What is the ownership status of the **main plot of land** used  for agricultural or forestry production?'
 
+surveydataset <- dplyr::select(surveydataset,!c('note2_1',
+                                                'note2_11',
+                                                'note2_12',
+                                                'note2_13',
+                                                'note2_14',
+                                                'note2_15',
+                                                'note2_16',
+                                                'note2_17',
+                                                'note2_18',
+                                                'note2_19',
+                                                'notefood',
+                                                'notefood1',
+                                                'notwom',
+                                                'noteq64',
+                                                'noteq641'))
 
 #q40
 surveydataset <- mutate(surveydataset,
@@ -977,6 +1010,8 @@ surveydataset <- dplyr::select(surveydataset, !c('q40/1','q40/2','q40/3','q40/4'
 'q40/17','q40/18','q40/19','q40/20', 'q40/100','q40'))
 
 surveydataset[surveydataset$q35 != 'Yes',c('q40first','q40second')] <- '97'
+
+#check
 
 for(i in 1:nrow(surveydataset)){
   if(surveydataset$q40first[i] != '97'){
@@ -1005,6 +1040,11 @@ labelsq40second <- c('Not Applicable',levelsq40second[2:7])
 surveydataset$q40second <- factor(surveydataset$q40second,
                                   levels = levelsq40second,
                                   labels = labelsq40second)
+
+
+
+#
+
 # surveydataset <- mutate(surveydataset,
 #                         q40_1 = `q40/1`,
 #                         q40_2 = `q40/2`,
@@ -1082,12 +1122,13 @@ surveydataset$q40second <- factor(surveydataset$q40second,
 #q361
 surveydataset$q36_1 <- as.numeric(surveydataset$q36_1)
 
-attr(surveydataset$q36_1, "var.labels") <- 'Area'
-attr(surveydataset$q36_1,'label') <- 'Area'
+attr(surveydataset$q36_1, "var.labels") <- 'Area (Acre)'
+attr(surveydataset$q36_1,'label') <- 'Area (Acre)'
 
 
 
 #q362
+options(scipen=999)
 surveydataset$q36_1a <- factor(surveydataset$q36_1a,
                             levels = c(1:6),
                             labels = c(
@@ -1104,9 +1145,88 @@ surveydataset$q36_1a <- factor(surveydataset$q36_1a)
 attr(surveydataset$q36_1a, "var.labels") <- 'Unit for Area'
 attr(surveydataset$q36_1a,'label') <- 'Unit for Area'
 
+for(i in 1:nrow(surveydataset)){
+  if(surveydataset$q36_1a[i] == 'Square rod' & is.na(surveydataset$q36_1a[i]) ==F ){
+    surveydataset$q36_1[i] <- surveydataset$q36_1[i] * 0.00625
+  }
+  
+  if(surveydataset$q36_1a[i] == 'Square feet' & is.na(surveydataset$q36_1a[i]) ==F){
+    surveydataset$q36_1[i] <- surveydataset$q36_1[i] * 1/43560
+  }
+  
+}
 
 
 
+
+#skipping some stuff
+
+##q37
+names(surveydataset) <-  str_replace(colnames(surveydataset),'/','.')
+surveydataset[surveydataset$q36_1 <= 0 ,paste('q37', 1:78,sep = '.')] <- '97'
+
+
+#for(var in paste('q37', 1:78,sep = '_')){
+  surveydataset <- mutate_at(surveydataset,
+                             paste('q37', 1:78,sep = '.'),
+                                      factor,
+                                         levels = c(0,1,97),
+                                         labels = c('No','Yes','Not Applicable')
+                             
+                          )
+  
+#q37b
+  surveydataset[is.na(surveydataset$q37b) == T, 'q37b'] <- '97'
+  surveydataset[surveydataset$q37b == 'cauliflower', 'q37b'] <- '1'
+  surveydataset$q37b <- factor(surveydataset$q37b,
+                               levels = c(1,97),
+                               labels = c('Cauliflower','Not Applicable'))
+
+  
+  
+
+  cropvarnames <- grep("q37", names(surveydataset), value = TRUE)[-c(1,80,81,82)]
+  cropnames <- c("African Palm", "Avocado", "Banana", "Bean / Bora", "Beet", "Bilimbi", "Black-Eyed Pea", "Boulanger / Eggplant", "Breadfruit", "Broccoli", "Cabbage", "Callaloo", "Carambola", "Carrot", "Cashew", "Cassava (Bitter)", "Cassava (Sweet)", "Celery", "Chard", "Cherry", "Cocoa", "Coconut", "Coffee", "Corilla", "Corn", "Corn (Sweet)", "Cucumber", "Dasheen", "Eddoe", "Eschallot", "Ginger", "Grapefruit", "Guava", "Lemon", "Lettuce", "Lime", "Mamey", "Mango", "Minica", "Mustard", "Ochro", "Onion", "Orange", "Pak Choi", "Papaya / Papaw", "Passion Fruit", "Peach", "Peanut", "Pear", "Pepper", "Pepper (Hot)", "Pepper (Sweet)", "Pepper (Wiri Wiri)", "Permanent Pasture", "Pineapple", "Plantain", "Pumpkin", "Red Beans", "Rice", "Saeme", "Sapodilla", "Scallion", "Sorghum", "Sorrel", "Sour Sop", "Squash", "Sugar Cane", "Sweet Potato", "Tangerine", "Thyme (Broad leaf)", "Thyme (Fine leaf)", "Tomato", "Watermelon", "Yam", "Other 1", "Other 2", "Other 3", "None")
+  
+  for(i in 1:78){
+   
+    
+    attr(surveydataset[[cropvarnames[i]]], "var.labels") <- paste('What crops were produced by the household during the last twelve month:',cropnames[i],sep = ' ')
+  
+    attr(surveydataset[[cropvarnames[i]]], "label") <- paste('What crops were produced by the household during the last twelve month:',cropnames[i],sep = ' ')
+    
+  }
+  
+  attr(surveydataset$q36_1, "var.labels") <- 'Area (Acre)'
+  attr(surveydataset$q36_1,'label') <- 'Area (Acre)'
+#numcrops 
+  
+
+
+#q39
+surveydataset[surveydataset$q37 == 78 | is.na(surveydataset$q37) == T ,grep("q39", names(surveydataset), value = TRUE)[-8]] <- '97'  
+ 
+inputvarnames <- grep("q39", names(surveydataset), value = TRUE)[c(-1,-8)]
+inputnames <- c("Natural (organic) fertilizers", "Synthetically produced chemical fertilizers", "Natural (organic) pesticides", "Synthetically produced pesticides", "Other", "None")
+
+
+for(i in 1:6){
+  surveydataset[[inputvarnames[i]]] <- factor(surveydataset[[inputvarnames[i]]],
+                                              levels = c(0,1,97),
+                                              labels = c(
+                                                'No',
+                                                'Yes',
+                                                'Not Applicable'
+                                              ))
+  
+  attr(surveydataset[[inputvarnames[i]]], "var.labels") <- paste('What type of agricultural inputs do you use for crops:',inputnames[i],sep = ' ')
+  
+  attr(surveydataset[[inputvarnames[i]]], "label") <- paste('What type of agricultural inputs do you use for crops:',inputnames[i],sep = ' ')
+  
+}  
+
+  
+  #}14
 # varlabel <- c(
 #   'start',
 #   'end',
@@ -1178,9 +1298,10 @@ attr(surveydataset$q36_1a,'label') <- 'Unit for Area'
 
 
 
+
 usethis::use_data(surveydataset, overwrite = TRUE)
 
 
 
 
-
+#str_replace(colnames(surveydataset),'/','_')
