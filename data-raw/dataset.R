@@ -1281,20 +1281,20 @@ surveydataset$q36_1 <- as.numeric(surveydataset$q36_1)
 
 
 for(i in 1:nrow(surveydataset)){
-  if(surveydataset$q36_2a[i] == 'Square rod' & is.na(surveydataset$q36_2a[i]) ==F ){
-    surveydataset$q36_2[i] <- surveydataset$q36_2[i] * 0.00625
+  if(surveydataset$q36_1a[i] == 'Square rod' & is.na(surveydataset$q36_1a[i]) ==F ){
+    surveydataset$q36_1[i] <- surveydataset$q36_1[i] * 0.00625
   }
   
-  if(surveydataset$q36_2a[i] == 'Square feet' & is.na(surveydataset$q36_2a[i]) ==F){
-    surveydataset$q36_2[i] <- surveydataset$q36_2[i] * 1/43560
+  if(surveydataset$q36_1a[i] == 'Square feet' & is.na(surveydataset$q36_1a[i]) ==F){
+    surveydataset$q36_1[i] <- surveydataset$q36_1[i] * 1/43560
   }
   
-  if(surveydataset$q36_2a[i] == 'Hectare' & is.na(surveydataset$q36_2a[i]) ==F){
-    surveydataset$q36_2[i] <- surveydataset$q36_2[i] * 2.47105
+  if(surveydataset$q36_1a[i] == 'Hectare' & is.na(surveydataset$q36_1a[i]) ==F){
+    surveydataset$q36_1[i] <- surveydataset$q36_1[i] * 2.47105
   }
   
-  if(surveydataset$q36_2a[i] == 'Square meter' & is.na(surveydataset$q36_2a[i]) ==F){
-    surveydataset$q36_2[i] <- surveydataset$q36_2[i] * 0.000247105
+  if(surveydataset$q36_1a[i] == 'Square meter' & is.na(surveydataset$q36_1a[i]) ==F){
+    surveydataset$q36_1[i] <- surveydataset$q36_1[i] * 0.000247105
   }
   
   
@@ -1598,6 +1598,8 @@ surveydataset[surveydataset$q37a == 'cane' & is.na(surveydataset$q37a) == F, 'q3
   
 # #numcrops 
 surveydataset[surveydataset$q36_1 <= 0 ,"numcrops"] <- '-3'
+surveydataset[surveydataset$37.78 == 'Yes' ,"numcrops"] <- '-3'
+
 attr(surveydataset[['numcrops']], "label") <- 'Number of crops produced'
 attr(surveydataset[['numcrops']], "var.labels") <- 'Number of crops produced'
 
@@ -1605,7 +1607,9 @@ attr(surveydataset[['numcrops']], "var.labels") <- 'Number of crops produced'
   
 
 #q39
-surveydataset[surveydataset$q37 == 78 | is.na(surveydataset$q37) == T ,grep("q39", names(surveydataset), value = TRUE)[-8]] <- '97'
+
+
+surveydataset[surveydataset$q37 == '78' | is.na(surveydataset$q37) == T ,grep("q39", names(surveydataset), value = TRUE)[-8]] <- '97'
 
 inputvarnames <- grep("q39", names(surveydataset), value = TRUE)[c(-1,-8)]
 inputnames <- c("Natural (organic) fertilizers", "Synthetically produced chemical fertilizers", "Natural (organic) pesticides", "Synthetically produced pesticides", "Other", "None")
@@ -2123,7 +2127,20 @@ surveydataset$q0_7 <- factor(surveydataset$q0_7,
 # 
 # 
 
-
+surveydataset <- dplyr::select(surveydataset,
+                               !c(grep('.*note.*',names(surveydataset),value = T),
+                                  'q0_5oth',
+                                  'q30_0',
+                                  'q31',
+                                  'q33',
+                                  'q34',
+                                  'q40',
+                                  paste('q40.',1:20,sep = ''),
+                                  'q40.100',
+                                  'q37',
+                                  'q39'
+                               )
+)
 
 usethis::use_data(surveydataset, overwrite = TRUE)
 
