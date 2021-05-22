@@ -1748,297 +1748,307 @@ surveydataset[grep('.*product.*',surveydataset$q43oth),'q43oth'] <- 'Make by-pro
 
 
 # 
-# #q45
-# 
-# 
-# #sum(surveydataset[i,grep("q37.", names(surveydataset), value = TRUE)[c(-78,-79,-80,-81)]] == 'Yes')
-# #sum(surveydataset[i,grep("q41.", names(surveydataset), value = TRUE)[1:7]] == 'Yes')
-# 
-# for(i in 1:nrow(surveydataset)){
-#   if(sum(surveydataset[i,grep("q37.", names(surveydataset), value = TRUE)[c(-78,-79,-80,-81)]] == 'Yes') == 0 & sum(surveydataset[i,grep("q41.", names(surveydataset), value = TRUE)[1:7]] == 'Yes') == 0){
-#     surveydataset$q45[i] <- '97'
-#   }
-# }
-# 
-# surveydataset$q45 <- factor(surveydataset$q45,
-#                             levels = c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L,97),
-#                             labels = c("Private individuals/ neighbours", "Sell at a marketplace", "Traders/middlemen", "Farmer/Producer Organizations", "Agro-Industry", "Other producers", "Other", "Do not sell agrcultural production", 'Not Applicable')
-# )
-# 
-# attr(surveydataset$q45, "var.labels") <- 'To whom do you sell to most of the agricultural production?'
-# attr(surveydataset$q45, "label") <- 'To whom do you sell to most of the agricultural production?'
-# 
-# 
-# #q46
-# 
-# surveydataset$q46 <- factor(surveydataset$q46,
-#                             levels = c(0L, 1L, 97L, 98L, 99L),
-#                             labels = c("No", "Yes", "Not applicable", "Don't know", "No answer")
-# 
-# )
-# 
-# attr(surveydataset$q46, "var.labels") <- 'Have you experienced a loss of your cultivated plots, animals or harvest in the **last 3-6 years**?'
-# attr(surveydataset$q46, "label") <- 'Have you experienced a loss of your cultivated plots, animals or harvest in the **last 3-6 years**?'
-# 
-# 
-# #q47
-# surveydataset[surveydataset$q46 != 'Yes',grep("q47.", names(surveydataset), value = TRUE)] <- '97'
-# 
-# for(var in grep("q47.", names(surveydataset), value = TRUE)[-9]){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0,1,97),
-#                                  labels = c('No','Yes','Not Applicable')
-# 
-# )
-# }
-# 
-# 
-# labels <- c("Lack or irregularity of rainfall", "Flooding, excess of water or rain", "Well runs dry", "Plagues and pests", "Stray/ Animals", "Fire", "Theft", "Other")
-# varnames <- grep("q47.", names(surveydataset), value = TRUE)[-9]
-# 
-# for(i in 1:8){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('What were the causes of this loss',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <- paste('What were the causes of this loss',labels[i],sep = '')
-# }
-# 
-# 
-# 
-# 
-# #q48
-# for(var in grep("q48.", names(surveydataset), value = TRUE)[-10]){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0,1),
-#                                  labels = c('No','Yes')
-#                                  
-#   )
-# }
-# 
-# 
-# labels <- c("Water", "Timber", "Firewood", "Wildmeat", "Fish", "Medical plants", "Craft materials", "Other", "None")
-# 
-# varnames <- grep("q48.", names(surveydataset), value = TRUE)[-10]
-# 
-# for(i in 1:9){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('What products and/or services did the household use from the forest area in the **last twelve months**?',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <-  paste('What products and/or services did the household use from the forest area in the **last twelve months**?',labels[i],sep = '')
-# }
-# 
-# 
-# 
-# #q49
-# 
-# for(i in 1:nrow(surveydataset)){
-#   if(sum(surveydataset[i,grep("q41.", names(surveydataset), value = TRUE)[1:7]] == 'Yes') == 0 & surveydataset$q41.8[i] == 'Yes'){
-#     surveydataset$q49_1[i] <- '97'
-#     surveydataset$q49_2[i] <- '97'
-#     surveydataset$q49_3[i] <- '97'
-#     surveydataset$q49_4[i] <- '97'
-#     surveydataset$q49_5[i] <- '97'
-#   }
-# }
-# 
-# 
-# for(var in grep("q49_", names(surveydataset), value = TRUE)){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0,1,97),
-#                                  labels = c('No','Yes','Not Applicable')
-#                                  
-#   )
-# }
-# 
-# 
-# labels <- c("Rotational grazing", "Improved grass species for feed", "Living fences", "Trees", "Conservation of streams")
-# 
-# varnames <- grep("q49_", names(surveydataset), value = TRUE)
-# 
-# for(i in 1:5){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('In the area used as pastureland, have you introduced any of the following items items?:',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <-  paste('In the area used as pastureland, have you introduced any of the following items items?:',labels[i],sep = '')
-# }
-# 
-# 
-# 
-# #q52
-# surveydataset$q52 <- factor(surveydataset$q52,
-#                             levels = c(0L, 1L, 98L, 99L),
-#                             labels = c("No", "Yes", "Don't know", "No answer")
-# 
-# )
-# 
-# attr(surveydataset$q52, "label") <-  'Are there organizations that focus on women’s empowerment in your region, particularly for agriculture?'
-# attr(surveydataset$q52, "var.labels") <-  'Are there organizations that focus on women’s empowerment in your region, particularly for agriculture?'
-# 
-# 
-# 
-# #q53
-# surveydataset[surveydataset$q52 != 'Yes','q53'] <- '97'
-# 
-# 
-# surveydataset$q53 <- factor(surveydataset$q53,
-#                             levels = c(0L, 1L, 98L, 99L,97),
-#                             labels = c("No", "Yes", "Don't know", "No answer",'Not Applicable')
-#                             
-# )
-# 
-# attr(surveydataset$q53, "label") <-  'Does any member of your household belong to one of these organizations?'
-# attr(surveydataset$q53, "var.labels") <-  'Does any member of your household belong to one of these organizations?'
-# 
-# 
-# 
-# 
-# #q54 to q61
-# varnames <- paste('q',54:61,sep = '')
-# 
-# for(var in varnames){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0L, 1L, 98L, 99L),
-#                                  labels = c("No", "Yes", "Don't know", "No answer")
-# 
-# 
-#   )
-# }
-# 
-# 
-# labels <- c("you were worried that you would not have enough food to eat because of a lack of money or other resources?", "you were unable to eat healthy and nutritious food because of a lack of money or other resources?", "you ate only a few kinds of foods because of a lack of money or other resources?", "you had to skip a meal because there was not enough money or other resources to get food?", "you ate less than you thought you should because of a lack of money or other resources?", "there was no food to eat of any kind in your house because of lack of resources to get food?", "you went to sleep at night hungry because there was not enough food?", "you went a whole day and night without eating anything at all because there was not enough food?")
-# 
-# 
-# for(i in 1:8){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('During the **last twelve months** was there a time when:',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <-  paste('During the **last twelve months** was there a time when:',labels[i],sep = '')
-# }
-# 
-# 
-# 
-# #q62
-# varnames <- paste('q62.',1:12,sep = '')
-# 
-# for(var in varnames){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0L, 1L),
-#                                  labels = c("No", "Yes")
-#                                  
-#                                  
-#   )
-# }
-# 
-# 
-# labels <- c("Cereals", "Vegetables", "Tuber (roots)", "Fruits", "Meat", "Eggs", "Fish", "Legumes", "Oil and Seeds", "Milk", "Sugar", "Other")
-# 
-# 
-# 
-# for(i in 1:12){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('Which foods does your household normally consume on a daily basis?:',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <-  paste('Which foods does your household normally consume on a daily basis?:',labels[i],sep = '')
-# }
-# 
-# 
-# 
-# #q63
-# surveydataset$q63 <- factor(surveydataset$q63,
-#                             levels = c(0,1),
-#                             labels = c('No','Yes'))
-# 
-# 
-# attr(surveydataset$q63, "var.labels") <- 'Is there a woman age 15-49 in the household who can answer a few nutrition questions?' 
-# attr(surveydataset$q63, "label") <-  'Is there a woman age 15-49 in the household who can answer a few nutrition questions?' 
-# 
-# 
-# 
-# 
-# 
-# #q51
-# 
-# surveydataset <- mutate(surveydataset,
-#                         q51_8 = Save_or_use_savings,
-#                         .keep = 'unused',
-#                         .after = 'q51_7')
-# 
-# for(i in 1:nrow(surveydataset)){
-#   if(surveydataset$q63[i] != 'Yes'){
-#     surveydataset$q51_1[i] <- '97'
-#     surveydataset$q51_2[i] <- '97'
-#     surveydataset$q51_3[i] <- '97'
-#     surveydataset$q51_4[i] <- '97'
-#     surveydataset$q51_5[i] <- '97'
-#     surveydataset$q51_6[i] <- '97'
-#     surveydataset$q51_7[i] <- '97'
-#     surveydataset$q51_8[i] <- '97'
-#   }
-# }
-# 
-# varnames <- paste('q51_',1:8,sep = '')
-# 
-# for(var in varnames){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0,1,97),
-#                                  labels = c('No','Yes','Not Applicable')
-#                                  
-#   )
-# }
-# 
-# 
-# labels <- c("How to use/cultivate the land", "Participating in agricultural training", "Use/purchase of agricultural inputs", "Use/purchase of agricultural technologies", "Health care", "How to use water for irrigation", "Acquire loans", "Save or use savings")
-# 
-# 
-# 
-# for(i in 1:8){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('In your opinion and thinking of your own situation, do you have decision making power over each of the following?:',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <-  paste('In your opinion and thinking of your own situation, do you have decision making power over each of the following?:',labels[i],sep = '')
-# }
-# 
-# 
-# 
-# 
-# 
-# #q65-76
-# varnames <- paste('q',65:76,sep = '')
-# 
-# for(var in varnames){
-# for(i in 1:nrow(surveydataset)){
-#   if(surveydataset$q63[i] != 'Yes'){
-#     surveydataset[[var]][i] <- '97'
-#   }
-# }
-# }
-#   
-# 
-# 
-# for(var in varnames){
-#   surveydataset[[var]] <- factor(surveydataset[[var]],
-#                                  levels = c(0L, 1L, 98L, 99L,97),
-# 
-#                                  labels = c("No", "Yes", "Don't know", "No answer",'Not Applicable')
-# 
-#                                  
-#   )
-# }
-# 
-# 
-# labels <- c("Any food made from grains and any white roots or tuber or plantains", "Any beans or peas", "Any nuts or seeds", "Any milk or milk products", "Any meat (including wild meat), poultry and fish products", "Any eggs", "Any dark green leafy vegetables", "Any vitamin A rich fruits, vegetables and roots", "Any other fruits:", "Any fried and salty food:", "Any sweet food:", "Any sweet beverages:")
-# 
-# 
-# 
-# 
-# for(i in 1:12){
-#   attr(surveydataset[[varnames[i]]], "var.labels") <- paste('Please mention all foods for which you consumed **more than a full tablespoon (15 mg) yesterday**:',labels[i],sep = '')
-#   attr(surveydataset[[varnames[i]]], "label") <-  paste('Please mention all foods for which you consumed **more than a full tablespoon (15 mg) yesterday**:',labels[i],sep = '')
-# }
-# 
-# 
-# #q06001
-# surveydataset$q0_6_001 <- factor(surveydataset$q0_6_001,
-#                                  levels = c(1,2),
-#                                  labels = c("Acceptable", "Too difficult")
-# )
-# 
-# 
-# #q07
-# surveydataset$q0_7 <- factor(surveydataset$q0_7,
-#                                  levels = c(1,2),
-#                                  labels = c("Acceptable", "Too long")
-# )
-# 
-# 
+#q45
+
+
+#sum(surveydataset[i,grep("q37.", names(surveydataset), value = TRUE)[c(-78,-79,-80,-81)]] == 'Yes')
+#sum(surveydataset[i,grep("q41.", names(surveydataset), value = TRUE)[1:7]] == 'Yes')
+
+for(i in 1:nrow(surveydataset)){
+  if(sum(surveydataset[i,grep("q37.", names(surveydataset), value = TRUE)[c(-78,-79,-80,-81)]] == 'Yes') == 0 & sum(is.na(surveydataset[i,c('q37a','q37b','q37c')])) == 3 & surveydataset$q37.78[i] == 'Yes' & sum(surveydataset[i,grep("q41.", names(surveydataset), value = TRUE)[1:7]] == 'Yes') == 0 & surveydataset$q41[i] == '8'){
+    surveydataset$q45[i] <- '97'
+  }
+}
+
+for(i in 1:nrow(surveydataset)){
+  if(is.na(surveydataset$q37[i]) == T & surveydataset$q41[i] == '8'){
+    surveydataset$q45[i] <- '97'
+  }
+}
+
+surveydataset$q45 <- factor(surveydataset$q45,
+                            levels = c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L,97),
+                            labels = c("Private individuals/ neighbours", "Sell at a marketplace", "Traders/middlemen", "Farmer/Producer Organizations", "Agro-Industry", "Other producers", "Other", "Do not sell agrcultural production", 'Not Applicable')
+)
+
+attr(surveydataset$q45, "var.labels") <- 'To whom do you sell to most of the agricultural production?'
+attr(surveydataset$q45, "label") <- 'To whom do you sell to most of the agricultural production?'
+
+# 
+#q46
+
+surveydataset$q46 <- factor(surveydataset$q46,
+                            levels = c(0L, 1L, 97L, 98L, 99L),
+                            labels = c("No", "Yes", "Not applicable", "Don't know", "No answer")
+
+)
+
+attr(surveydataset$q46, "var.labels") <- 'Have you experienced a loss of your cultivated plots, animals or harvest in the **last 3-6 years**?'
+attr(surveydataset$q46, "label") <- 'Have you experienced a loss of your cultivated plots, animals or harvest in the **last 3-6 years**?'
+
+# 
+#q47
+surveydataset[surveydataset$q46 != 'Yes',grep("q47.", names(surveydataset), value = TRUE)] <- '97'
+
+for(var in grep("q47.", names(surveydataset), value = TRUE)[-9]){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0,1,97),
+                                 labels = c('No','Yes','Not Applicable')
+
+)
+}
+
+
+labels <- c("Lack or irregularity of rainfall", "Flooding, excess of water or rain", "Well runs dry", "Plagues and pests", "Stray/ Animals", "Fire", "Theft", "Other")
+varnames <- grep("q47.", names(surveydataset), value = TRUE)[-9]
+
+for(i in 1:8){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('What were the causes of this loss',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <- paste('What were the causes of this loss',labels[i],sep = '')
+}
+
+
+
+# 
+#q48
+for(var in grep("q48.", names(surveydataset), value = TRUE)[-10]){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0,1),
+                                 labels = c('No','Yes')
+
+  )
+}
+
+
+labels <- c("Water", "Timber", "Firewood", "Wildmeat", "Fish", "Medical plants", "Craft materials", "Other", "None")
+
+varnames <- grep("q48.", names(surveydataset), value = TRUE)[-10]
+
+for(i in 1:9){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('What products and/or services did the household use from the forest area in the **last twelve months**?',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <-  paste('What products and/or services did the household use from the forest area in the **last twelve months**?',labels[i],sep = '')
+}
+
+
+surveydataset$q48oth <- tolower(surveydataset$q48oth)
+# 
+#q49
+
+for(i in 1:nrow(surveydataset)){
+  if(sum(surveydataset[i,grep("q41.", names(surveydataset), value = TRUE)[1:7]] == 'Yes') == 0 & surveydataset$q41.8[i] == 'Yes'){
+    surveydataset$q49_1[i] <- '97'
+    surveydataset$q49_2[i] <- '97'
+    surveydataset$q49_3[i] <- '97'
+    surveydataset$q49_4[i] <- '97'
+    surveydataset$q49_5[i] <- '97'
+  }
+}
+
+
+for(var in grep("q49_", names(surveydataset), value = TRUE)){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0,1,97),
+                                 labels = c('No','Yes','Not Applicable')
+
+  )
+}
+
+
+labels <- c("Rotational grazing", "Improved grass species for feed", "Living fences", "Trees", "Conservation of streams")
+
+varnames <- grep("q49_", names(surveydataset), value = TRUE)
+
+for(i in 1:5){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('In the area used as pastureland, have you introduced any of the following items items?:',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <-  paste('In the area used as pastureland, have you introduced any of the following items items?:',labels[i],sep = '')
+}
+
+
+# 
+#q52
+surveydataset$q52 <- factor(surveydataset$q52,
+                            levels = c(0L, 1L, 98L, 99L),
+                            labels = c("No", "Yes", "Don't know", "No answer")
+
+)
+
+attr(surveydataset$q52, "label") <-  'Are there organizations that focus on women’s empowerment in your region, particularly for agriculture?'
+attr(surveydataset$q52, "var.labels") <-  'Are there organizations that focus on women’s empowerment in your region, particularly for agriculture?'
+
+
+
+#q53
+surveydataset[surveydataset$q52 != 'Yes','q53'] <- '97'
+
+
+surveydataset$q53 <- factor(surveydataset$q53,
+                            levels = c(0L, 1L, 98L, 99L,97),
+                            labels = c("No", "Yes", "Don't know", "No answer",'Not Applicable')
+
+)
+
+attr(surveydataset$q53, "label") <-  'Does any member of your household belong to one of these organizations?'
+attr(surveydataset$q53, "var.labels") <-  'Does any member of your household belong to one of these organizations?'
+
+
+
+# 
+#q54 to q61
+varnames <- paste('q',54:61,sep = '')
+
+for(var in varnames){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0L, 1L, 98L, 99L),
+                                 labels = c("No", "Yes", "Don't know", "No answer")
+
+
+  )
+}
+
+
+labels <- c("you were worried that you would not have enough food to eat because of a lack of money or other resources?", "you were unable to eat healthy and nutritious food because of a lack of money or other resources?", "you ate only a few kinds of foods because of a lack of money or other resources?", "you had to skip a meal because there was not enough money or other resources to get food?", "you ate less than you thought you should because of a lack of money or other resources?", "there was no food to eat of any kind in your house because of lack of resources to get food?", "you went to sleep at night hungry because there was not enough food?", "you went a whole day and night without eating anything at all because there was not enough food?")
+
+
+for(i in 1:8){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('During the **last twelve months** was there a time when:',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <-  paste('During the **last twelve months** was there a time when:',labels[i],sep = '')
+}
+
+# 
+# 
+#q62
+varnames <- paste('q62.',1:12,sep = '')
+
+for(var in varnames){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0L, 1L),
+                                 labels = c("No", "Yes")
+
+
+  )
+}
+
+
+labels <- c("Cereals", "Vegetables", "Tuber (roots)", "Fruits", "Meat", "Eggs", "Fish", "Legumes", "Oil and Seeds", "Milk", "Sugar", "Other")
+
+
+
+for(i in 1:12){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('Which foods does your household normally consume on a daily basis?:',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <-  paste('Which foods does your household normally consume on a daily basis?:',labels[i],sep = '')
+}
+
+surveydataset$q62oth <- tolower(surveydataset$q62oth)
+surveydataset[grep('.*flour.*',surveydataset$q62oth),'q62oth'] <- 'rice and flour products (e.g cassave bread)'
+surveydataset[grep('.*rice.*',surveydataset$q62oth),'q62oth'] <- 'rice and flour products (e.g cassave bread)'
+
+# 
+#q63
+surveydataset$q63 <- factor(surveydataset$q63,
+                            levels = c(0,1),
+                            labels = c('No','Yes'))
+
+
+attr(surveydataset$q63, "var.labels") <- 'Is there a woman age 15-49 in the household who can answer a few nutrition questions?'
+attr(surveydataset$q63, "label") <-  'Is there a woman age 15-49 in the household who can answer a few nutrition questions?'
+
+
+
+
+# 
+#q51
+
+surveydataset <- mutate(surveydataset,
+                        q51_8 = Save_or_use_savings,
+                        .keep = 'unused',
+                        .after = 'q51_7')
+
+for(i in 1:nrow(surveydataset)){
+  if(surveydataset$q63[i] != 'Yes'){
+    surveydataset$q51_1[i] <- '97'
+    surveydataset$q51_2[i] <- '97'
+    surveydataset$q51_3[i] <- '97'
+    surveydataset$q51_4[i] <- '97'
+    surveydataset$q51_5[i] <- '97'
+    surveydataset$q51_6[i] <- '97'
+    surveydataset$q51_7[i] <- '97'
+    surveydataset$q51_8[i] <- '97'
+  }
+}
+
+varnames <- paste('q51_',1:8,sep = '')
+
+for(var in varnames){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0,1,97),
+                                 labels = c('No','Yes','Not Applicable')
+
+  )
+}
+
+
+labels <- c("How to use/cultivate the land", "Participating in agricultural training", "Use/purchase of agricultural inputs", "Use/purchase of agricultural technologies", "Health care", "How to use water for irrigation", "Acquire loans", "Save or use savings")
+
+
+
+for(i in 1:8){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('In your opinion and thinking of your own situation, do you have decision making power over each of the following?:',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <-  paste('In your opinion and thinking of your own situation, do you have decision making power over each of the following?:',labels[i],sep = '')
+}
+
+
+
+
+
+#q65-76
+varnames <- paste('q',65:76,sep = '')
+
+for(var in varnames){
+for(i in 1:nrow(surveydataset)){
+  if(surveydataset$q63[i] != 'Yes'){
+    surveydataset[[var]][i] <- '97'
+  }
+}
+}
+
+
+
+for(var in varnames){
+  surveydataset[[var]] <- factor(surveydataset[[var]],
+                                 levels = c(0L, 1L, 98L, 99L,97),
+
+                                 labels = c("No", "Yes", "Don't know", "No answer",'Not Applicable')
+
+
+  )
+}
+
+
+labels <- c("Any food made from grains and any white roots or tuber or plantains", "Any beans or peas", "Any nuts or seeds", "Any milk or milk products", "Any meat (including wild meat), poultry and fish products", "Any eggs", "Any dark green leafy vegetables", "Any vitamin A rich fruits, vegetables and roots", "Any other fruits:", "Any fried and salty food:", "Any sweet food:", "Any sweet beverages:")
+
+
+
+
+for(i in 1:12){
+  attr(surveydataset[[varnames[i]]], "var.labels") <- paste('Please mention all foods for which you consumed **more than a full tablespoon (15 mg) yesterday**:',labels[i],sep = '')
+  attr(surveydataset[[varnames[i]]], "label") <-  paste('Please mention all foods for which you consumed **more than a full tablespoon (15 mg) yesterday**:',labels[i],sep = '')
+}
+
+
+#q06001
+surveydataset$q0_6_001 <- factor(surveydataset$q0_6_001,
+                                 levels = c(1,2),
+                                 labels = c("Acceptable", "Too difficult")
+)
+
+
+#q07
+surveydataset$q0_7 <- factor(surveydataset$q0_7,
+                                 levels = c(1,2),
+                                 labels = c("Acceptable", "Too long")
+)
+
+
 # #q08
 # 
 # 
