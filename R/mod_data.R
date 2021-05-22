@@ -20,6 +20,12 @@ mod_data_ui <- function(id){
 mod_data_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    surveydataset <- surveydataset
+    
+    
+    
+    
     output$table <- DT::renderDataTable({shiny.semantic::semantic_DT(surveydataset,
                                                                      filter = c("top")
     )
