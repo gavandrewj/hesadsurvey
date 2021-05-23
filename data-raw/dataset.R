@@ -711,8 +711,8 @@ surveydataset$q30_1 <- factor(surveydataset$q30_1,
 
 surveydataset$q30_1 <- factor(surveydataset$q30_1)
 
-attr(surveydataset$q30_1, "var.labels") <- 'Forest, or tree species, that is kept to protect the water source: Are there any mechanisms in place to protect the water source?'
-attr(surveydataset$q30_1,'label') <- 'Forest, or tree species, that is kept to protect the water source: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_1, "var.labels") <- 'Are there any mechanisms in place to protect the water source? Forest, or tree species '
+attr(surveydataset$q30_1,'label') <- 'Are there any mechanisms in place to protect the water source? Forest, or tree species '
 
 
 
@@ -727,8 +727,8 @@ surveydataset$q30_2 <- factor(surveydataset$q30_2,
 
 surveydataset$q30_2 <- factor(surveydataset$q30_2)
 
-attr(surveydataset$q30_2, "var.labels") <- 'Grazing that is kept unused and being restored or reforested: Are there any mechanisms in place to protect the water source?'
-attr(surveydataset$q30_2,'label') <- 'Grazing that is kept unused and being restored or reforested: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_2, "var.labels") <- 'Are there any mechanisms in place to protect the water source: Grazing'
+attr(surveydataset$q30_2,'label') <- 'Are there any mechanisms in place to protect the water source: Grazing'
 
 
 #q303
@@ -742,8 +742,8 @@ surveydataset$q30_3 <- factor(surveydataset$q30_3,
 
 surveydataset$q30_3 <- factor(surveydataset$q30_3)
 
-attr(surveydataset$q30_3, "var.labels") <- 'Fence: Are there any mechanisms in place to protect the water source?'
-attr(surveydataset$q30_3,'label') <- 'Fence: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_3, "var.labels") <- 'Are there any mechanisms in place to protect the water source: Fence'
+attr(surveydataset$q30_3,'label') <- 'Are there any mechanisms in place to protect the water source: Fence'
 
 
 
@@ -756,14 +756,14 @@ surveydataset$q30_4 <- factor(surveydataset$q30_4,
                                 'Yes'
                               ))
 
-attr(surveydataset$q30_4, "var.labels") <- 'Other: Are there any mechanisms in place to protect the water source?'
-attr(surveydataset$q30_4,'label') <- 'Other: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30_4, "var.labels") <- 'Are there any mechanisms in place to protect the water source : Other'
+attr(surveydataset$q30_4,'label') <- 'Are there any mechanisms in place to protect the water source : Other'
 
 
 
 
-attr(surveydataset$q30oth, "var.labels") <- 'Other options: Are there any mechanisms in place to protect the water source?'
-attr(surveydataset$q30oth,'label') <- 'Other options: Are there any mechanisms in place to protect the water source?'
+attr(surveydataset$q30oth, "var.labels") <- 'Are there any mechanisms in place to protect the water source: Other options'
+attr(surveydataset$q30oth,'label') <- 'Are there any mechanisms in place to protect the water source: Other options'
 
 
 # #leaving q304 and q30oth for now 
@@ -888,7 +888,7 @@ attr(surveydataset$q31_7,'label') <- 'What are the water sources for household u
 #q31/8
 surveydataset[grep('.*Reservoir.*',surveydataset$q31oth),'q31_8'] <- '1'
 surveydataset[grep('.*Reservoir.*',surveydataset$q31oth),'q31_10'] <- '0'
-surveydataset[grep('.*Reservoir.*',surveydataset$q31oth),'q31oth'] <- ''
+surveydataset[grep('.*Reservoir.*',surveydataset$q31oth),'q31oth'] <- NA
 
 surveydataset$q31_8 <- factor(surveydataset$q31_8,
                               levels = c(0,1),
@@ -914,6 +914,8 @@ attr(surveydataset$q31_9,'label') <- 'What are the water sources for household u
 
 
 
+attr(surveydataset$q31_10, "var.labels") <- 'What are the water sources for household uses? Other'
+attr(surveydataset$q31_10,'label') <- 'What are the water sources for household uses? Other'
 
 
 # #remove q31oth and q310
@@ -1157,6 +1159,15 @@ surveydataset$q40second <- factor(surveydataset$q40second,
                                   levels = levelsq40second,
                                   labels = labelsq40second)
 
+surveydataset[surveydataset$q40first == '100','q40first'] <- 'Not Applicable'
+
+
+attr(surveydataset$q40first, "var.labels") <- 'First person selected'
+attr(surveydataset$q40first,'label') <- 'First person selected'
+
+
+attr(surveydataset$q40second, "var.labels") <- 'Second person selected'
+attr(surveydataset$q40second,'label') <- 'Second person selected'
 
 # 
 # #
@@ -1603,7 +1614,26 @@ surveydataset[surveydataset$q37.78 == 'Yes' ,"numcrops"] <- '-3'
 attr(surveydataset[['numcrops']], "label") <- 'Number of crops produced'
 attr(surveydataset[['numcrops']], "var.labels") <- 'Number of crops produced'
 
+surveydataset$numcrops <- as.numeric(surveydataset$numcrops)
 
+for(i in 1:nrow(surveydataset)){
+  if(surveydataset$q37.79[i] == 'Yes'){
+    surveydataset$numcrops[i] <- surveydataset$numcrops[i] + 1
+  }
+  if(surveydataset$q37.80[i] == 'Yes'){
+    surveydataset$numcrops[i] <- surveydataset$numcrops[i] + 1
+  }
+  if(is.na(surveydataset$q37a[i]) == 0){
+    surveydataset$numcrops[i] <- surveydataset$numcrops[i] + 1
+  }
+  if(is.na(surveydataset$q37b[i]) == 0){
+    surveydataset$numcrops[i] <-surveydataset$numcrops[i] + 1
+  }
+  if(is.na(surveydataset$q37c[i]) == 0){
+    surveydataset$numcrops[i] <- surveydataset$numcrops[i] + 1
+  }
+  
+}
   
 
 #q39
@@ -2149,7 +2179,187 @@ surveydataset <- dplyr::select(surveydataset,
                                   'q47',
                                   'q48',
                                   'q49',
-                                  'q49a'
+                                  'q49a',
+                                  'q54_0',
+                                  'q62',
+                                  'notwom',
+                                  'q51'
+                               )
+)
+
+
+attr(surveydataset$q36_1, "var.labels") <- 'Area used for Crop Production (Acres)'
+attr(surveydataset$q36_1,'label') <- 'Area used for Crop Production (Acres)'
+
+attr(surveydataset$q36_2, "var.labels") <- 'Area used for Livestock: Pasture (Acres)'
+attr(surveydataset$q36_2,'label') <- 'Area used for Livestock: Pasture (Acres)'
+
+attr(surveydataset$q36_3, "var.labels") <- 'Area used for Forest and Rangeland (Acres)'
+attr(surveydataset$q36_3,'label') <- 'Area used for Forest and Rangeland (Acres)'
+
+attr(surveydataset$q36_4, "var.labels") <- 'Area used for Aquaculture (Acres)'
+attr(surveydataset$q36_4,'label') <- 'Area used for Aquaculture (Acres)'
+
+attr(surveydataset$q36_5, "var.labels") <- 'Area used for Other uses (Acres)'
+attr(surveydataset$q36_5,'label') <- 'Area used for Other uses (Acres)'
+
+attr(surveydataset$q37a, "var.labels") <- 'What crops were produced by the household during the last twelve month: Other crop'
+attr(surveydataset$q37a,'label') <- 'What crops were produced by the household during the last twelve month: Other crop'
+
+attr(surveydataset$q37b, "var.labels") <- 'What crops were produced by the household during the last twelve month: Other crop'
+attr(surveydataset$q37b,'label') <- 'What crops were produced by the household during the last twelve month: Other crop'
+
+attr(surveydataset$q37c, "var.labels") <- 'What crops were produced by the household during the last twelve month: Other crop'
+attr(surveydataset$q37c,'label') <- 'What crops were produced by the household during the last twelve month: Other crop'
+
+
+write_excel_csv(surveydataset,
+                'C:/Users/gavin/Documents/GitHub/hesadsurvey/surveydataset.csv')
+
+surveydataset <- read_csv('C:/Users/gavin/Documents/GitHub/hesadsurvey/surveydataset.csv')
+
+surveydataset <- pivot_longer(surveydataset,paste('p',1:20,sep = ''),names_to = 'pcount',values_to = 'NameofPerson')
+
+
+surveydataset <- dplyr::mutate(surveydataset,
+                               id = `_id`,
+                               .keep = 'unused')
+
+
+
+#merging
+hhdemo <- readxl::read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_Survey2_-_all_versions_-_False_-_2021-05-21-10-31-53.xlsx',
+                   sheet = 'hhdemo')
+hhdemo$name_indiv <- tolower(hhdemo$name_indiv)
+
+hhdemo <- dplyr::mutate(hhdemo,
+                               id = `_submission__id`,
+                               NameofPerson = name_indiv,
+                               .keep = 'unused')
+
+
+
+surveydataset <- inner_join(hhdemo,surveydataset,by = c('NameofPerson','id'))
+
+surveydataset$q05 <- as.numeric(surveydataset$q05)
+attr(surveydataset$q05, "var.labels") <- 'Age of the household member'
+attr(surveydataset$q05,'label') <- 'Age of the household member'
+
+
+surveydataset$q07 <- factor(surveydataset$q07,
+                            levels = c(0L, 1L, 98L, 99L),
+                            labels = c("Male", "Female", "Don't know", "No answer")
+
+)
+
+attr(surveydataset$q07, "var.labels") <- 'Sex of the household member'
+attr(surveydataset$q07,'label') <- 'Sex of the household member'
+
+
+
+surveydataset$q08 <- factor(surveydataset$q08,
+                            levels = 1:7,
+                            labels = c("African", "Amerindian", "Chinese", "East Indian", "European/White", "Mixed", "Portuguese")
+)
+
+attr(surveydataset$q08, "var.labels") <- 'Ethnicity of the household member'
+attr(surveydataset$q08,'label') <- 'Ethnicity of the household member'
+
+
+surveydataset$q09 <- factor(surveydataset$q09,
+                            levels = c(1L, 2L, 3L, 4L, 5L, 98L, 99L),
+
+                            labels = c("None", "Primary", "Secondary", "Tertiary", "Post Graduate", "Don’t know", "No answer")
+
+)
+
+attr(surveydataset$q09, "var.labels") <- 'Formal Educational level of the household member'
+attr(surveydataset$q08,'label') <- 'Formal Educational level of the household member'
+
+
+
+#merge for crops
+crops <- readxl::read_excel('C:/Users/gavin/Documents/GitHub/hesadsurvey/data-raw/HESAD_Survey2_-_all_versions_-_False_-_2021-05-21-10-31-53.xlsx',
+                             sheet = 'crops1')
+
+#crops$name_indiv <- tolower(hhdemo$name_indiv)
+
+crops <- dplyr::mutate(crops,
+                        id = `_submission__id`,
+                        .keep = 'unused')
+
+surveydataset <- inner_join(crops,surveydataset,by = c('id'))
+
+
+surveydataset$name_crop <- factor(surveydataset$name_crop)
+
+
+attr(surveydataset$name_crop, "var.labels") <- 'Name of the crop grown on land'
+attr(surveydataset$name_crop,'label') <- 'Name of the crop grown on land'
+
+
+
+surveydataset$q38 <- as.numeric(surveydataset$q38)
+
+
+attr(surveydataset$q38, "var.labels") <- 'Quantity of the crop in name_crop that was harvested in the last 12 months'
+attr(surveydataset$q38,'label') <- 'Quantity of the crop in name_crop that was harvested in the last 12 months'
+
+surveydataset$q38_1 <- factor(surveydataset$q38_1,
+                              levels = c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L),
+                              labels = c("Pounds", "Kilograms", "Litres", "Pints", "Gallons", "Dozens", "Units", "Grams", "Other")
+
+)
+
+attr(surveydataset$q38_1, "var.labels") <- 'Units of Quantity of the crop in name_crop that was harvested in the last 12 months'
+attr(surveydataset$q38_1,'label') <- 'Units of Quantity of the crop in name_crop that was harvested in the last 12 months'
+
+
+attr(surveydataset$q38_1oth, "var.labels") <- 'Other Units of Quantity of the crop in name_crop that was harvested in the last 12 months'
+attr(surveydataset$q38_1oth,'label') <- 'Other Units of Quantity of the crop in name_crop that was harvested in the last 12 months'
+
+
+surveydataset$q38_1oth <- tolower(surveydataset$q38_1oth)
+surveydataset[grep('.*acre',surveydataset$q38_1oth) ,'q38_1oth'] <- 'Acre'
+surveydataset[grep('.*bunch',surveydataset$q38_1oth) ,'q38_1oth'] <- 'Bunch'
+surveydataset[grep('.*parcel',surveydataset$q38_1oth) ,'q38_1oth'] <- 'Parcel'
+surveydataset[grep('.*poundal',surveydataset$q38_1oth) ,'q38_1oth'] <- 'Poundal'
+surveydataset[grep('.*rice',surveydataset$q38_1oth) ,'q38_1oth'] <- 'Rice bag'
+
+
+surveydataset <- dplyr::select(surveydataset,
+                               !c(
+                                 "crop_pos",
+                                 "_index",
+                                 "_parent_table_name.x",
+                                 "_parent_index.x",
+                                 "_submission__uuid.x",
+                                 "_submission__submission_time.x",
+                                 "_submission__validation_status.x",
+                                 "_submission__notes.x",
+                                 "_submission__status.x",
+                                 "_submission__submitted_by.x",
+                                 "_submission__tags.x",
+                                 "id",
+                                 "_parent_table_name.y",
+                                 "_parent_index.y",
+                                 "_submission__uuid.y",
+                                 "_submission__submission_time.y",
+                                 "_submission__validation_status.y",
+                                 "_submission__notes.y",
+                                 "_submission__status.y",
+                                 "_submission__submitted_by.y",
+                                 "_submission__tags.y",
+                                 "start",
+                                 "end",
+                                 "_uuid",
+                                 "_submission_time",
+                                 "_validation_status",
+                                 "_status",
+                                 "_submitted_by",
+                                 "_tags",
+                                 "_index.y",
+                                 "_index.x"
                                )
 )
 
