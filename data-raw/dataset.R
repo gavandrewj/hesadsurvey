@@ -1598,7 +1598,7 @@ surveydataset[surveydataset$q37a == 'cane' & is.na(surveydataset$q37a) == F, 'q3
   
 # #numcrops 
 surveydataset[surveydataset$q36_1 <= 0 ,"numcrops"] <- '-3'
-surveydataset[surveydataset$37.78 == 'Yes' ,"numcrops"] <- '-3'
+surveydataset[surveydataset$q37.78 == 'Yes' ,"numcrops"] <- '-3'
 
 attr(surveydataset[['numcrops']], "label") <- 'Number of crops produced'
 attr(surveydataset[['numcrops']], "var.labels") <- 'Number of crops produced'
@@ -1836,6 +1836,10 @@ for(i in 1:9){
 
 surveydataset$q48oth <- tolower(surveydataset$q48oth)
 # 
+
+
+
+
 #q49
 
 for(i in 1:nrow(surveydataset)){
@@ -2138,7 +2142,14 @@ surveydataset <- dplyr::select(surveydataset,
                                   paste('q40.',1:20,sep = ''),
                                   'q40.100',
                                   'q37',
-                                  'q39'
+                                  'q39',
+                                  'q39oth',
+                                  'q41',
+                                  'q43',
+                                  'q47',
+                                  'q48',
+                                  'q49',
+                                  'q49a'
                                )
 )
 
